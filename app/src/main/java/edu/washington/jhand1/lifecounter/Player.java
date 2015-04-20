@@ -31,18 +31,24 @@ public class Player {
 
     public void kill() {
         alive = false;
+        lives = 0;
     }
 
     public void addLife(int n) {
-        lives += n;
+        updateLives(n);
     }
 
     public void subtractLife(int n) {
-        lives -= n;
+        updateLives(-n);
     }
 
     //Allows client to add or subtract lives using positive and negative numbers
-    public void updateLives(int n) { lives += n; }
+    public void updateLives(int n) {
+        lives += n;
+        if (lives < 0) {
+            lives = 0;
+        }
+    }
 
     public int getLives() {
         return lives;

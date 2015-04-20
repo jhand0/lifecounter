@@ -4,7 +4,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:layout_height="wrap_content" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -14,11 +14,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Magic: The Gathering Lives"
+        android:text="@string/title"
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
         android:textStyle="bold"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="20dp"
+        android:enabled="false"
+        android:textColor="#ff000000" />
 
     <TextView
         android:text="@string/lblPlayer1"
@@ -302,6 +304,14 @@
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
         android:layout_gravity="right" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/losers"
+        android:orientation="vertical">
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.*;
 
@@ -21,9 +22,21 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         numPlayers = 4;
         if (savedInstanceState != null) {
-            createPlayers();
+            createPlayers(savedInstanceState.getIntegerArrayList("playerLives"));
         } else {
             createPlayers();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putIntegerArrayList("playerLives", playerLives());
+    }
+
+    public void createPlayers(List<Integer> lives) {
+        for (int i = 0; i < lives.size(); i++) {
+            players.add(new Player(lives.get(i), i));
         }
 
     }
@@ -94,29 +107,45 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     public void update(int pNum, int lifeChange) {
-        TextView count;
-        players.get(pNum).updateLives(lifeChange);
+        TextView count = null;
+        Player current = players.get(pNum);
+        current.updateLives(lifeChange);
 
         switch (pNum) {
             case 0:
                 count =  (TextView) findViewById(R.id.lCount_0);
-                count.setText("Lives: " + players.get(pNum).getLives());
                 break;
             case 1:
                 count = (TextView) findViewById(R.id.lCount_1);
-                count.setText("Lives: " + players.get(pNum).getLives());
                 break;
             case 2:
                 count = (TextView) findViewById(R.id.lCount_2);
-                count.setText("Lives: " + players.get(pNum).getLives());
                 break;
             case 3:
                 count = (TextView) findViewById(R.id.lCount_3);
-                count.setText("Lives: " + players.get(pNum).getLives());
                 break;
             default:
                 break;
         }
+        if (count != null) {
+            count.setText("Lives: " + current.getLives());
+            if (players.get(pNum).getLives() <= 0 && current.isAlive()) {
+                LinearLayout losers = (LinearLayout)findViewById(R.id.losers);
+                TextView newLoser = new TextView(this);
+                newLoser.setText("Player " + (pNum + 1) + " LOSES!");
+                current.kill();
+                count.setText("Lives: " + current.getLives());
+                losers.addView(newLoser);
+            }
+        }
+    }
+
+    public ArrayList<Integer> playerLives() {
+        ArrayList<Integer> lives = new ArrayList<Integer>();
+        for (int i = 0; i < players.size(); i++) {
+            lives.set(i, players.get(i).getLives());
+        }
+        return lives;
     }
 
     @Override

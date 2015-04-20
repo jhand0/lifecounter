@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.*;
 
 
@@ -130,12 +132,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         if (count != null) {
             count.setText("Lives: " + current.getLives());
             if (players.get(pNum).getLives() <= 0 && current.isAlive()) {
-                LinearLayout losers = (LinearLayout)findViewById(R.id.losers);
-                TextView newLoser = new TextView(this);
-                newLoser.setText("Player " + (pNum + 1) + " LOSES!");
                 current.kill();
                 count.setText("Lives: " + current.getLives());
-                losers.addView(newLoser);
+                Toast.makeText(getApplicationContext(), "Player " + (pNum + 1) + " LOSES!",
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }

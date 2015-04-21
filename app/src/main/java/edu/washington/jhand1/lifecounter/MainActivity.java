@@ -35,6 +35,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     public void createPlayers(List<Integer> lives) {
+        players = new ArrayList<Player>();
         for (int i = 0; i < lives.size(); i++) {
             players.add(new Player(lives.get(i), i + 1));
         }
@@ -44,7 +45,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void createPlayers() {
         players = new ArrayList<Player>();
 
-        for (int i = 0; i <= numPlayers; i++) {
+        for (int i = 0; i < numPlayers; i++) {
             players.add(new Player(20, i + 1));
         }
     }
@@ -144,8 +145,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     public ArrayList<Integer> playerLives() {
         ArrayList<Integer> lives = new ArrayList<Integer>();
-        for (int i = 0; i < players.size(); i++) {
-            lives.set(i, players.get(i).getLives());
+        for (Player p : players) {
+            lives.add(p.getLives());
         }
         return lives;
     }

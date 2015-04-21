@@ -23,6 +23,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         numPlayers = 4;
         if (savedInstanceState != null) {
             createPlayers(savedInstanceState.getIntegerArrayList("playerLives"));
+            for (int i = 0; i < players.size(); i++) {
+                updateLifeText(i, players.get(i));
+            }
         } else {
             createPlayers();
         }
@@ -111,35 +114,38 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         Player current = players.get(pNum);
         current.updateLives(lifeChange);
         if (current.isAlive()) {
-            TextView countTxt = null;
-            switch (pNum) {
-                case 0:
-                    countTxt = (TextView) findViewById(R.id.lCount_0);
-                    break;
-                case 1:
-                    countTxt = (TextView) findViewById(R.id.lCount_1);
-                    break;
-                case 2:
-                    countTxt = (TextView) findViewById(R.id.lCount_2);
-                    break;
-                case 3:
-                    countTxt = (TextView) findViewById(R.id.lCount_3);
-                    break;
-                default:
-                    break;
-            }
-            if (countTxt != null) {
-                countTxt.setText("Lives: " + current.getLives());
-                if (players.get(pNum).getLives() <= 0) {
-                    current.kill();
-                    countTxt.setText("Lives: " + current.getLives());
-                    Toast.makeText(getApplicationContext(), current.getName() + " LOSES!",
-                            Toast.LENGTH_SHORT).show();
-                }
+            updateLifeText(pNum, current);
+            if (players.get(pNum).getLives() <= 0) {
+                current.kill();
+                Toast.makeText(getApplicationContext(), current.getName() + " LOSES!",
+                        Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(getApplicationContext(), current.getName() + " is already dead!",
                     Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void updateLifeText(int pNum, Player current) {
+        TextView countTxt = null;
+        switch (pNum) {
+            case 0:
+                countTxt = (TextView) findViewById(R.id.lCount_0);
+                break;
+            case 1:
+                countTxt = (TextView) findViewById(R.id.lCount_1);
+                break;
+            case 2:
+                countTxt = (TextView) findViewById(R.id.lCount_2);
+                break;
+            case 3:
+                countTxt = (TextView) findViewById(R.id.lCount_3);
+                break;
+            default:
+                break;
+        }
+        if (countTxt != null) {
+            countTxt.setText("Lives: " + current.getLives());
         }
     }
 

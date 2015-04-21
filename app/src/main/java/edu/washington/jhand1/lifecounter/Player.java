@@ -17,7 +17,7 @@ public class Player {
 
     public Player(int lives, int playerNumber) {
         this.lives = lives;
-        this.name = "player " + playerNumber;
+        this.name = "Player " + playerNumber;
         this.alive = true;
     }
 
@@ -48,6 +48,7 @@ public class Player {
         if (lives < 0) {
             lives = 0;
         }
+        if (lives > 0) { alive = true; }
     }
 
     public int getLives() {
